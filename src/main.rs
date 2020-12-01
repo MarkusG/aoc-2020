@@ -1,26 +1,18 @@
-use std::fs;
+use std::env;
+use std::process;
+
+use aoc_2020::day_1::day_1;
 
 fn main() {
-    let input = fs::read_to_string("input/1.txt").expect("Error reading file");
-    let entries = input.split("\n").map(|x| x.parse::<i32>().unwrap())
-        .collect::<Vec<_>>();
-    'outer: for x in &entries {
-        for y in &entries {
-            if x + y == 2020 {
-                println!("First two: {}", x * y);
-                break 'outer;
-            }
-        }
+    let args = env::args().collect::<Vec<_>>();
+
+    if args.len() < 2 {
+        println!("No day selected");
+        process::exit(1);
     }
 
-    'outer: for x in &entries {
-        for y in &entries {
-            for z in &entries {
-                if x + y + z == 2020 {
-                    println!("First three: {}", x * y * z);
-                    break 'outer;
-                }
-            }
-        }
+    match args[1].parse::<i32>().expect("Invalid day") {
+        1 => day_1(),
+        _ => ()
     }
 }
