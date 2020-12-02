@@ -12,16 +12,16 @@ pub fn day_2() {
 fn is_valid_1(line: &str) -> bool {
     let mut parts = line.split(" ");
 
-    let mut range = parts.nth(0).unwrap().split("-");
-    let lower = range.nth(0).unwrap().parse::<i32>().unwrap();
-    let upper = range.nth(0).unwrap().parse::<i32>().unwrap();
+    let mut range = parts.next().unwrap().split("-");
+    let lower = range.next().unwrap().parse::<i32>().unwrap();
+    let upper = range.next().unwrap().parse::<i32>().unwrap();
 
-    let letter = &parts.nth(0).unwrap().chars().nth(0).unwrap();
-    let password = parts.nth(0).unwrap();
+    let letter = parts.next().unwrap().as_bytes()[0];
+    let password = parts.next().unwrap();
 
     let mut count = 0;
-    for c in password.chars() {
-        if c == *letter {
+    for &c in password.as_bytes() {
+        if c == letter {
             count += 1;
         }
     }
@@ -32,12 +32,12 @@ fn is_valid_1(line: &str) -> bool {
 fn is_valid_2(line: &str) -> bool {
     let mut parts = line.split(" ");
 
-    let mut pos = parts.nth(0).unwrap().split("-");
-    let first = pos.nth(0).unwrap().parse::<usize>().unwrap() - 1;
-    let second = pos.nth(0).unwrap().parse::<usize>().unwrap() - 1;
+    let mut pos = parts.next().unwrap().split("-");
+    let first = pos.next().unwrap().parse::<usize>().unwrap() - 1;
+    let second = pos.next().unwrap().parse::<usize>().unwrap() - 1;
 
-    let letter = parts.nth(0).unwrap().as_bytes()[0];
-    let password = parts.nth(0).unwrap().as_bytes();
+    let letter = parts.next().unwrap().as_bytes()[0];
+    let password = parts.next().unwrap().as_bytes();
 
     if password[first] == letter {
         return password[second] != letter
