@@ -1,5 +1,6 @@
 use std::env;
 use std::process;
+use std::time::SystemTime;
 
 use aoc_2020::day_1::day_1;
 use aoc_2020::day_2::day_2;
@@ -14,6 +15,7 @@ fn main() {
         process::exit(1);
     }
 
+    let now = SystemTime::now();
     match args[1].parse::<i32>().expect("Invalid day") {
         1 => day_1(),
         2 => day_2(),
@@ -21,4 +23,5 @@ fn main() {
         4 => day_4(),
         _ => ()
     }
+    println!("Time: {:?}", now.elapsed().unwrap());
 }
