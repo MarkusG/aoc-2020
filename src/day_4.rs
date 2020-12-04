@@ -28,9 +28,9 @@ fn valid_data(pp: &str) -> bool {
         let key = kv.next().unwrap();
         let val = kv.next().unwrap();
         match key {
-            "byr" => if !validate_byr(val) { return false; }
-            "iyr" => if !validate_iyr(val) { return false; }
-            "eyr" => if !validate_eyr(val) { return false; }
+            "byr" => if !in_range((1920, 2002), val) { return false; }
+            "iyr" => if !in_range((2010, 2020), val) { return false; }
+            "eyr" => if !in_range((2020, 2030), val) { return false; }
             "hgt" => if !validate_hgt(val) { return false; }
             "hcl" => if !validate_hcl(val) { return false; }
             "ecl" => if !validate_ecl(val) { return false; }
@@ -42,19 +42,9 @@ fn valid_data(pp: &str) -> bool {
     true
 }
 
-fn validate_byr(byr: &str) -> bool {
-    let b = byr.parse::<i32>().unwrap();
-    b >= 1920 && b <= 2002
-}
-
-fn validate_iyr(iyr: &str) -> bool {
-    let i = iyr.parse::<i32>().unwrap();
-    i >= 2010 && i <= 2020
-}
-
-fn validate_eyr(eyr: &str) -> bool {
-    let e = eyr.parse::<i32>().unwrap();
-    e >= 2020 && e <= 2030
+fn in_range(range: (i32, i32), s: &str) -> bool {
+    let n = s.parse::<i32>().unwrap();
+    n >= range.0 && n <= range.1
 }
 
 fn validate_hgt(hgt: &str) -> bool {
